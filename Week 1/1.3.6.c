@@ -24,7 +24,7 @@ int main( void )
 		if (PINC & 0x01)
 		{
 			hertz = 4;
-			} else {
+		} else {
 			hertz = 1;
 		}
 		
@@ -32,7 +32,7 @@ int main( void )
 		PORTD = 0x01;
 		wait(1000/hertz);
 		PORTD = 0;
-		
+	
 	}
 
 	return 1;
