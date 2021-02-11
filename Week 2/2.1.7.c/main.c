@@ -11,12 +11,10 @@ int main(void)
 	PORTA = 0x01;
 	init();
 	
-	set_cursor(5);
-	display_text("a");
+	display_text("Hello");
 	
-	set_cursor(1);
-	display_text("6");
-	
+	set_cursor(10);
+	display_text("World!");
 	
     while (1) 
     {
