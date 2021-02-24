@@ -58,6 +58,7 @@ void init(){
 	cmdSend(0x28);
 	cmdSend(0x0F);
 	cmdSend(0x06);
+	clear();
 	return_home();
 }
 
