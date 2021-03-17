@@ -14,15 +14,15 @@
 #define BIT(x)			(1 << (x))
 
 volatile int TimerPreset = -1;  // 0xF6, 10 till overflow
-volatile int tenthValue = 0;
+volatile int overflowValue = 0;
 
 // Interrupt routine timer2 overflow
 ISR( TIMER2_OVF_vect ) {
 	TCNT2 = TimerPreset;	// Preset value
-	tenthValue++;		// Increment counter
+	overflowValue++;		// Increment counter
 	clear();
 	char countString[5];
-	itoa(tenthValue, countString, 10);
+	itoa(overflowValue, countString, 10);
 	display_text(countString);
 }
 
@@ -38,14 +38,14 @@ int main(void) {
 	
 	DDRD &= ~BIT(7);		// PD7 op input: DDRD=xxxx xxx0
 	DDRA = 0xFF;			// set PORTA for output (shows countregister)
-	DDRB = 0xFF;			// set PORTB for output (shows tenthvalue)
+	DDRB = 0xFF;			// set PORTB for output (shows overflowValue)
 	
 	timer2Init();
 	init();
 
 	while (1) {
 		PORTA = TCNT2;		// show value counter 2
-		PORTB = tenthValue;	// show value tenth counter
+		PORTB = overflowValue;	// show value tenth counter
 		wait(100);
 	}
 }
