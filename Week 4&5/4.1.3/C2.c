@@ -78,6 +78,21 @@ void displayDriverInit()
 	displayOn();
 }
 
+void writeLedDisplay(int value){
+	if (value >= 0){
+		spi_writeWord(0x01, value % 10);
+		spi_writeWord(0x02, value / 10 % 10);
+		spi_writeWord(0x03, value / 100 % 10);
+		spi_writeWord(0x04, value / 1000 % 10);
+	} else {
+		int absoluteVal = abs(value);
+		spi_writeWord(0x01, absoluteVal % 10);
+		spi_writeWord(0x02, absoluteVal / 10 % 10);
+		spi_writeWord(0x03, absoluteVal / 100 % 10);
+		spi_writeWord(0x04, 10);
+	}
+}
+
 int main()
 {
 	DDRB=0x01; // Set PB0 pin as output for display select
@@ -87,13 +102,8 @@ int main()
 	{
 		spi_writeWord(i, 0); // Set display to 0
 	}
-	wait(1000);
-	// write 4-digit data
-	for (char i =1; i<=4; i++)
-	{
-		spi_writeWord(i,i); //Set every display to its index
-		wait(1000);
-	}
-	wait(1000);
+	writeLedDisplay(1234);
+	wait(2000);
+	writeLedDisplay(-123);
 	return (1);
 }
